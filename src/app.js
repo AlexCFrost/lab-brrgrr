@@ -91,7 +91,6 @@ function renderLettuce() {
 
 document.querySelector(".btn-patty").onclick = function () {
   state.Patty = !state.Patty;
-  activeClass(this,state.Patty)
   renderAll();
 };
 
@@ -99,7 +98,6 @@ document.querySelector(".btn-patty").onclick = function () {
 
 document.querySelector(".btn-cheese").onclick = function () {
   state.Cheese = !state.Cheese;
-  activeClass(this,state.Cheese)
   renderAll();
 };
 
@@ -107,15 +105,13 @@ document.querySelector(".btn-cheese").onclick = function () {
 
 document.querySelector(".btn-tomatoes").onclick = function () {
   state.Tomatoes = !state.Tomatoes;
-  activeClass(this,state.Tomatoes)
   renderAll();
 };
 
 // Trial 2 - Setup event listener for the onion button
 
 document.querySelector(".btn-onions").onclick = function () {
-  state.Lettuce = !state.Lettuce;
-  activeClass(this,state.Onions)
+  state.Onions = !state.Onions;
   renderAll();
 };
 
@@ -123,49 +119,66 @@ document.querySelector(".btn-onions").onclick = function () {
 
 document.querySelector(".btn-lettuce").onclick = function () {
   state.Lettuce = !state.Lettuce;
-  activeClass(this,state.Lettuce)
   renderAll();
 };
 
 //Challenge 1 - Add/Remove the class active to the buttons based on state
 
-function activeClass(button,state){
-  if(state){
-    button.classList.add("active")
-  }
-  else{
-    button.classList.remove("active")
-  }
+function renderButtons(){
+ if (state.Patty ==true){
+ document.querySelector(".btn-patty").classList.add("active")
+ }else{
+ document.querySelector(".btn-patty").classList.remove("active")
+ }
+ if (state.Cheese ==true){
+ document.querySelector(".btn-cheese").classList.add("active")
+ }else{
+ document.querySelector(".btn-cheese").classList.remove("active")
+ }
+ if (state.Tomatoes ==true){
+ document.querySelector(".btn-tomatoes").classList.add("active")
+ }else{
+ document.querySelector(".btn-tomatoes").classList.remove("active")
+ }
+ if (state.Onions ==true){
+ document.querySelector(".btn-onions").classList.add("active")
+ }else{
+ document.querySelector(".btn-onions").classList.remove("active")
+ }
+ if (state.Lettuce ==true){
+ document.querySelector(".btn-lettuce").classList.add("active")
+ }else{
+  document.querySelector(".btn-lettuce").classList.remove("active")
+}
 }
 
 //Challenge 2 - Render only the items selected in the ingredients board based on the state
 
 function renderIngredientsBoard(){
-  let items = document.getElementsByClassName("items")
-  console.log(items)
-  for(let i=0;i<items.length;i++){
-    let check = items[i].textContent
-    renderPrice(check)
-    if(state[check]!=true){
-      items[i].style.display="none"
-    }
-    else{
-      items[i].style.display="block"
-    }
-  }
+ let container = document.querySelectorAll(".items")
+ for (let i=0; i< container.length;i++){
+  let j = container[i].textContent
+  if (state[j]!=true){
+  container[i].style.display = 'none'
+ }
+ }
 }
-
+ 
 //Judgement 1
 //In the p element having price-details as the class, display the calculated
 //price based on ingredients
 
 function renderPrice(){
-  let price = document.querySelector(".price-details")
-  let total = wholeWheatBun
-  for(let i in state){
-    if(state[i]){
-      total+=ingredients[i]
-    }
+   let total = 2*wholeWheatBun
+   let container = document.querySelectorAll(".items")
+   for (let i=0; i< container.length;i++){
+   let j = container[i].textContent
+   if (state[j]==true){
+   total+=ingredients[j]
+  
   }
-  price.textContent=`INR ${total}`;
+  }
+  console.log(total)
+  var price =document.querySelector(".price-details")
+  price.innerHTML=total
 }
